@@ -1,6 +1,7 @@
 ﻿using RogueSharp;
 using RLNET;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Roguelike.Core
 {
@@ -15,17 +16,24 @@ namespace Roguelike.Core
             _monsters = new List<Monster>();
         }
 
-        public void Draw(RLConsole mapConsole)
+        public void Draw(RLConsole mapConsole, RLConsole statConsole)
         {
-            mapConsole.Clear();
             mapConsole.SetBackColor(0, 0, mapConsole.Width, mapConsole.Height, Swatch.DbDark);
             foreach(Cell cell in GetAllCells())
             {
                 SetConsoleSymbolForCell(mapConsole, cell);
             }
+            int i = 0;
+
             foreach(Monster monster in _monsters)
             {
                 monster.Draw(mapConsole, this);
+
+                if(IsInFov(monster.X, monster.Y))
+                {
+                    monster.DrawStats(statConsole, i);
+                    i++;
+                }
             }
         }
 
@@ -113,6 +121,17 @@ namespace Roguelike.Core
             _monsters.Add(monster);
 
             SetIsWalkable(monster.X, monster.Y, false);
+        }
+
+        public void RemoveMonster(Monster monster)
+        {
+            _monsters.Remove(monster);
+            SetIsWalkable(monster.X, monster.Y, true);
+        }
+
+        public Monster GetMonsterAt(int x, int y)
+        {
+            return _monsters.FirstOrDefault(m => m.X == x && m.Y == y);
         }
 
         public Point GetRandomWalkableLocationInRoom(Rectangle room)

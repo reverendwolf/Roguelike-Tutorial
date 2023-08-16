@@ -124,7 +124,12 @@ namespace Roguelike
         {
             if(_renderRequired)
             {
-                DungeonMap.Draw(_mapConsole);
+                _mapConsole.Clear();
+                _statConsole.Clear();
+                _statConsole.SetBackColor(0, 0, _statConsole.Width, _statConsole.Height, Swatch.DbDark);
+                _messageConsole.Clear();
+
+                DungeonMap.Draw(_mapConsole, _statConsole);
 
                 Player.Draw(_mapConsole, DungeonMap);
 

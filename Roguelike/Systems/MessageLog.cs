@@ -27,7 +27,6 @@ namespace Roguelike.Systems
 
         public void Draw(RLConsole console)
         {
-            console.Clear();
             console.SetBackColor(0, 0, console.Width, console.Height, Swatch.DbDark);
             string[] lines = _lines.ToArray();
             for (int i = 0; i < lines.Length; i++)

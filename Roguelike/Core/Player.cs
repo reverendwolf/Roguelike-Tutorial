@@ -23,7 +23,7 @@ namespace Roguelike.Core
 
         public void DrawStats ( RLConsole statConsole)
         {
-            statConsole.SetBackColor(0, 0, statConsole.Width, statConsole.Height, Swatch.DbDark);
+            
             statConsole.Print(1, 1, $"Name:    {Name}", Colors.TextHeading);
             statConsole.Print(1, 3, $"Health:  {Health}/{MaxHealth}", Colors.Text);
             statConsole.Print(1, 5, $"Attack:  {Attack} ({AttackChance}%)", Colors.Text);
